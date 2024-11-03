@@ -3,7 +3,7 @@
     "name": "Twitter Thread Generator",
     "version": "1.0",
     "description": "Generate Twitter threads from webpage content using ChatGPT and LangChain.",
-    "permissions": ["activeTab", "scripting", "storage"],
+    "permissions": ["activeTab", "scripting", "storage", "tabs"],
     "action": {
       "default_popup": "popup.html"
     },

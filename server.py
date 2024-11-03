@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 # Set up the ChatGPT model
-llm = ChatOpenAI(model_name="gpt-4", api_key=os.getenv("OPENAI_API_KEY"))
+llm = ChatOpenAI(model_name="gpt-4o-mini", api_key=os.getenv("OPENAI_API_KEY"))
 
 # Define prompt for generating Twitter threads
 template = """
