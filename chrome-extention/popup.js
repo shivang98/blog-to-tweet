@@ -10,8 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const { tabOutputs = {} } = await chrome.storage.local.get("tabOutputs");
     if (tabOutputs[tabId]) {
       outputElement.innerHTML = tabOutputs[tabId];
+      outputElement.classList.add("visible");
     } else {
       outputElement.innerHTML = "";
+      outputElement.classList.remove("visible");
     }
   }
 
@@ -25,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Add loading state
         const outputElement = document.getElementById("output");
         outputElement.innerHTML = "Generating thread...";
+        outputElement.classList.add("visible");
         outputElement.classList.add("loading");
         generateThreadButton.disabled = true;
 
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await injectContentScriptIfNeeded(tab.id);
 
         // Add a small delay to ensure content script is ready
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
         try {
           const response = await new Promise((resolve, reject) => {
@@ -62,10 +65,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.log("Content extracted from page:", response.content);
             await generateTwitterThread(response.content);
           } else {
-            throw new Error("No content received. Please refresh the page and try again.");
+            throw new Error(
+              "No content received. Please refresh the page and try again."
+            );
           }
         } catch (messageError) {
-          throw new Error("Unable to access page content. Please refresh the page and try again.");
+          throw new Error(
+            "Unable to access page content. Please refresh the page and try again."
+          );
         }
       } catch (error) {
         console.error("Error:", error);
@@ -73,6 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (outputElement) {
           const errorHtml = `<div class="error">Error: ${error.message}</div>`;
           outputElement.innerHTML = errorHtml;
+          outputElement.classList.add("visible");
 
           // Save error to storage
           const tabId = currentTab.id;
@@ -128,9 +136,10 @@ async function generateTwitterThread(content) {
     await chrome.storage.local.set({ tabOutputs });
 
     outputElement.innerHTML = threadHtml;
+    outputElement.classList.add("visible");
   } catch (error) {
     console.error("Error generating Twitter thread:", error);
-    throw error; // Let the main error handler deal with it
+    throw error;
   }
 }
 
@@ -138,9 +147,9 @@ async function injectContentScriptIfNeeded(tabId) {
   try {
     await chrome.scripting.executeScript({
       target: { tabId },
-      files: ['content.js']
+      files: ["content.js"],
     });
   } catch (error) {
-    console.log('Content script already exists or cannot be injected');
+    console.log("Content script already exists or cannot be injected");
   }
 }

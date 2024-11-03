@@ -59,11 +59,16 @@ body {
   line-height: 1.5;
   color: #14171a;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: none; /* Hide by default */
+}
+
+#output.visible {
+  display: block;
 }
 
 /* Loading Animation Enhancement */
-.loading {
-  display: flex;
+#output.loading {
+  display: flex !important; /* Override the display: none */
   align-items: center;
   justify-content: center;
   gap: 12px;
@@ -71,7 +76,7 @@ body {
   font-style: italic;
 }
 
-.loading::after {
+#output.loading::after {
   content: '';
   width: 24px;
   height: 24px;
