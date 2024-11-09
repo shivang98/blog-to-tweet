@@ -16,7 +16,9 @@ You are a social media expert. Create a Twitter thread based on this webpage con
 
 {content}
 
-Make sure each tweet is concise and engaging, fitting within 280 characters, and split the content into multiple tweets.
+Cover all key points of the webpage. Make sure each tweet is concise and engaging, fitting within 280 characters, and split the content into multiple tweets.
+Do not self reference. Do not explain what you are doing. Don't add emojis or hashtags. Remove all promotional content.
+Do not add any reference of author or webpage you are usinging in the final tweets.
 """
 
 prompt = PromptTemplate(input_variables=["content"], template=template)
